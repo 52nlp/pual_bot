@@ -175,7 +175,7 @@ class Client(WebQQClient):
     @group_message_handler
     def handle_group_message(self, member_nick, content, group_code,
                              send_uin, source):
-        callback = partial(self.send_group_with_nick, member_nick, group_code)
+        callback = partial(self.send_group, group_code)
         self.handle_message(send_uin, content, callback)
 
     @sess_message_handler
@@ -185,9 +185,11 @@ class Client(WebQQClient):
 
     @discu_message_handler
     def handle_discu_message(self, did, from_uin, content, source):
-        nick = self.hub.get_friend_name(from_uin)
-        callback = partial(self.send_discu_with_nick, nick, did)
+        callback = partial(self.send_discu, did)
         self.handle_message(from_uin, content, callback, 'g')
+
+    def send_discu(self, did, content):
+        self.hub.send_discu_msg(did, content)
 
     def send_discu_with_nick(self, nick, did, content):
         content = u"{0}: {1}".format(nick, content)
@@ -197,6 +199,9 @@ class Client(WebQQClient):
         content = content.strip()
         if self.plug_loader.dispatch(from_uin, content, type, callback):
             self.msg_num += 1
+
+    def send_group(self, group_code, content):
+        self.hub.send_group_msg(group_code, content)
 
     def send_group_with_nick(self, nick, group_code, content):
         content = u"{0}: {1}".format(nick, content)

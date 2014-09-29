@@ -44,7 +44,8 @@ class CommandPlugin(BasePlugin):
     def is_match(self, from_uin, content, type):
         ABOUT_STR = u"\nAuthor    :   cold\nE-mail    :   wh_linux@126.com\n"\
             u"HomePage  :   http://t.cn/zTocACq\n"\
-            u"Project@  :   http://git.io/hWy9nQ"
+            u"Project@  :   http://git.io/hWy9nQ\n"\
+            u"AI Author  :  seagull"
         HELP_DOC = u"\n====命令列表====\n"\
             u"help         显示此信息\n"\
             u"ping         确定机器人是否在线\n"\
@@ -58,7 +59,7 @@ class CommandPlugin(BasePlugin):
         about_cmd = "about"
         help_cmd = "help"
         commands = [ping_cmd, about_cmd, help_cmd, "uptime"]
-        command_resp = {ping_cmd: u"小的在", about_cmd: ABOUT_STR,
+        command_resp = {ping_cmd: u"pong", about_cmd: ABOUT_STR,
                         help_cmd: HELP_DOC,
                         "uptime": self.uptime}
 
